@@ -3,6 +3,7 @@ from PIL import Image
 import cv2
 import sys
 import numpy
+from scipy import ndimage
 
 def edge_detection(matrix):
 	# kernel used is:
@@ -24,7 +25,8 @@ def edge_detection(matrix):
 			elif j > 0 and j < m - 1:
 				edge[i, j] = - matrix[i, (j-1)] + 8 * matrix[i, j] - matrix[i, (j+1)]
 
-	img = Image.fromarray(edge, 'L')
+	A = numpy.squeeze(numpy.asarray(edge))
+	img = Image.fromarray(A, 'L')
 	img.save('my.png')
 
 
@@ -36,4 +38,10 @@ img = cv2.imread(sys.argv[1])
 # conver to gray scale
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-edge_detection(gray)
+# we found on of the best algorithms to detect the edges named: Canny
+# documentation: https://docs.opencv.org/3.1.0/da/d22/tutorial_py_canny.html
+edges = cv2.Canny(gray,25,50)
+
+A = numpy.squeeze(numpy.asarray(edges))
+img = Image.fromarray(A, 'L')
+img.save(sys.argv[2])
