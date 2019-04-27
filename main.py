@@ -1,39 +1,39 @@
 # importing PIL 
 from PIL import Image 
 import cv2
-# importing system calls
 import sys
+import numpy
 
 def edge_detection(matrix):
-	kernel = [[1, 0, -1], [0, 0, 0], [-1, 0, 1]]
-	print(kernel)
-	print(matrix[0,0])
-	print(matrix[0,1])
+	# kernel used is:
+	# kernel = [[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]]
 
+	n, m = gray.shape
 
+	print(m)
+	print(n)
+
+	edge = numpy.zeros((n, m))
+
+	for i in range(0, n):
+		for j in range(0, m):
+			if j == 0:
+				edge[i, j] = 8 * matrix[i, j] - matrix[i, (j+1)]
+			elif j == m - 1:
+				edge[i, j] = - matrix[i, (j-1)] + 8 * matrix[i, j]
+			elif j > 0 and j < m - 1:
+				edge[i, j] = - matrix[i, (j-1)] + 8 * matrix[i, j] - matrix[i, (j+1)]
+
+	img = Image.fromarray(edge, 'L')
+	img.save('my.png')
 
 
 print(sys.argv[0]);
 
-# # Read the color image 
-# img = Image.open(sys.argv[1])
-
-# # # transform the color image to matrix and returns a tuple of (R, G, B) for that pixel
-# # rgb = img.load()
-# # print rgb[0, 0]
-
-# # # how to get the 
-# # r = rgb[0,0][0]
-# # g = rgb[0,0][1]
-# # b = rgb[0,0][2]
-# # print(str(r) + " " + str(g) + " " + str(b))
-
-# # RGB 2 GRAY and conver to matrix
-# gray = img.convert('L').load()
-# print gray[0,0]
-# print gray[0,1]
-
+# read the image
 img = cv2.imread(sys.argv[1])
+
+# conver to gray scale
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 edge_detection(gray)

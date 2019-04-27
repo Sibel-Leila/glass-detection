@@ -8,5 +8,6 @@ We studied the articole: "Seeing Glassware: from Edge Detection to Pose Estimati
 Now we try to implement this algorithm using python
 
 Need to install:
-$ sudo apt install python-pip
-$ pip install Pillow
+sudo apt install python-pip
+pip install opencv-python
+
