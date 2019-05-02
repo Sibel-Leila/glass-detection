@@ -13,9 +13,13 @@ def canny():
 	# conver to gray scale
 	gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+	blurred = cv2.GaussianBlur(gray, (7, 7), 0)
+
 	# we found on of the best algorithms to detect the edges named: Canny
 	# documentation: https://docs.opencv.org/3.1.0/da/d22/tutorial_py_canny.html
-	edges = cv2.Canny(gray, 35, 50)
+	edges = cv2.Canny(blurred, 35, 50)
+
+	print_image(edges)
 
 def print_image(edges):
 	# print the image
@@ -49,4 +53,6 @@ def edgeDetection():
 	# }
 	# else     cv::imwrite(outFilename, 255*edges)
 
-edgeDetection()
+canny()
+
+
