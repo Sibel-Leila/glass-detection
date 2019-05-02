@@ -11,3 +11,34 @@ Need to install:
 sudo apt install python-pip
 pip install opencv-python
 
+Canny edge detector
+https://towardsdatascience.com/canny-edge-detection-step-by-step-in-python-computer-vision-b49c3a2d8123
+1. Noise reduction;
+2. Gradient calculation;
+3. Non-maximum suppression;
+4. Double threshold;
+5. Edge Tracking by Hysteresis.
+
+
+Structured forests for fast edge detection
+https://docs.opencv.org/3.4/d0/da5/tutorial_ximgproc_prediction.html
+
+1. Load source color image
+2. Convert source image to [0;1] range
+3. Run main algorithm
+cv::Mat edges(image.size(), image.type());
+cv::Ptr<StructuredEdgeDetection> pDollar =
+    cv::createStructuredEdgeDetection(modelFilename);
+pDollar->detectEdges(image, edges);
+4. Show results
+if ( outFilename == "" )
+{
+    cv::namedWindow("edges", 1);
+    cv::imshow("edges", edges);
+    cv::waitKey(0);
+}
+else     cv::imwrite(outFilename, 255*edges)
+
+
+Structured forests
+https://github.com/ArtanisCV/StructuredForests
